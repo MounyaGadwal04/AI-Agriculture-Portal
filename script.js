@@ -1,59 +1,40 @@
-function predictCrop() {
+function recommendCrop() {
 
-    let temp = parseInt(document.getElementById("temp").value);
-    let humidity = parseInt(document.getElementById("humidity").value);
-    let rain = parseInt(document.getElementById("rain").value);
-    let soil = document.getElementById("soil").value;
+    let temp = parseFloat(document.getElementById("temperature").value);
+    let humidity = parseFloat(document.getElementById("humidity").value);
+    let rainfall = parseFloat(document.getElementById("rainfall").value);
+    let soil = document.getElementById("soilType").value;
 
     let crop = "";
+    let confidence = 0;
 
-    if (rain > 150) {
+    // 🌾 Rice
+    if (humidity > 70 && rainfall > 100) {
         crop = "Rice 🌾";
-    }
-    else if (temp > 30) {
+        confidence = 92;
+
+    // 🌿 Cotton
+    } else if (temp >= 25 && temp <= 40 && (soil === "Black Soil" || soil === "Red Soil")) {
         crop = "Cotton 🌱";
-    }
-    else if (humidity > 60) {
+        confidence = 90;
+
+    // 🌽 Maize
+    } else if (temp >= 20 && temp <= 30 && rainfall >= 50 && rainfall <= 120) {
         crop = "Maize 🌽";
-    }
-    else {
-        crop = "Wheat 🌿";
-    }
+        confidence = 88;
 
-    let fertilizer = "";
+    // 🌾 Wheat
+    } else if (temp >= 10 && temp <= 25 && rainfall < 80) {
+        crop = "Wheat 🌾";
+        confidence = 85;
 
-    if (crop.includes("Rice")) {
-        fertilizer = "Urea";
+    } else {
+        crop = "Mixed Crops / Unsure ⚠️";
+        confidence = 70;
     }
-    else if (crop.includes("Cotton")) {
-        fertilizer = "DAP";
-    }
-    else if (crop.includes("Maize")) {
-        fertilizer = "NPK";
-    }
-    else {
-        fertilizer = "Organic Compost";
-    }
-
-    let weather = "";
-
-    if (temp > 35) {
-        weather = "Hot ☀️";
-    }
-    else if (temp < 20) {
-        weather = "Cold ❄️";
-    }
-    else {
-        weather = "Moderate 🌤️";
-    }
-
-    let confidence = Math.floor(Math.random() * 10) + 90;
 
     document.getElementById("result").innerHTML =
         "Recommended Crop: " + crop +
         "<br>Soil Type: " + soil +
-        "<br>Weather Status: " + weather +
-        "<br>Recommended Fertilizer: " + fertilizer +
-        "<br>AI Confidence: " + confidence + "%" +
-        "<br>Farmer Tip: Ensure proper irrigation and soil testing.";
+        "<br>AI Confidence: " + confidence + "%";
 }

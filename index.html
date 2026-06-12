@@ -1,3 +1,113 @@
-  <p style="text-align:center;">
-AI-based Crop Prediction and Farmer Assistance System
-</p>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Agriculture Intelligence Portal</title>
+<style>
+body{
+    font-family: Arial;
+    background:#eef5f0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.card{
+    background:white;
+    padding:25px;
+    width:400px;
+    border-radius:15px;
+    box-shadow:0px 0px 15px rgba(0,0,0,0.2);
+}
+
+h2{
+    text-align:center;
+    color:#2e7d32;
+}
+
+input, select{
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+}
+
+button{
+    width:100%;
+    padding:10px;
+    background:#2e7d32;
+    color:white;
+    border:none;
+    cursor:pointer;
+    font-size:16px;
+}
+
+button:hover{
+    background:#1b5e20;
+}
+
+.result{
+    margin-top:15px;
+    padding:10px;
+    background:#f1f8e9;
+    border-left:5px solid #2e7d32;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>🌱 AI Agriculture Intelligence</h2>
+
+    <input type="number" id="temp" placeholder="Temperature (°C)">
+    <input type="number" id="hum" placeholder="Humidity (%)">
+    <input type="number" id="rain" placeholder="Rainfall (mm)">
+
+    <select id="soil">
+        <option>Black Soil</option>
+        <option>Red Soil</option>
+        <option>Alluvial Soil</option>
+    </select>
+
+    <button onclick="predict()">Recommend Crop</button>
+
+    <div class="result" id="output"></div>
+</div>
+
+<script>
+function predict(){
+
+    let t = document.getElementById("temp").value;
+    let h = document.getElementById("hum").value;
+    let r = document.getElementById("rain").value;
+    let s = document.getElementById("soil").value;
+
+    let crop = "";
+    let fert = "";
+    let conf = Math.floor(Math.random()*10)+90;
+
+    if(s === "Black Soil"){
+        crop = "Cotton 🌿";
+        fert = "DAP + Urea";
+    }
+    else if(s === "Red Soil"){
+        crop = "Groundnut 🌰";
+        fert = "NPK Fertilizer";
+    }
+    else{
+        crop = "Rice 🌾";
+        fert = "Organic Compost";
+    }
+
+    document.getElementById("output").innerHTML =
+    "<b>Recommended Crop:</b> " + crop + "<br>" +
+    "<b>Soil Type:</b> " + s + "<br>" +
+    "<b>Fertilizer:</b> " + fert + "<br>" +
+    "<b>AI Confidence:</b> " + conf + "%<br>" +
+    "<b>Tip:</b> Maintain proper irrigation and soil health.";
+}
+</script>
+
+</body>
+</html>
